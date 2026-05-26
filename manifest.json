@@ -1,11 +1,11 @@
 {
-  "name": "Aylık Durum - Gelir Gider",
+  "name": "Tayfun Bütçe",
   "short_name": "Bütçem",
-  "description": "Kişisel mali durum ve gelir gider takip uygulaması.",
+  "description": "Tayfun AKTAŞ Gelişmiş Kişisel Finans ve Mali Durum Analiz PWA Uygulaması",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#070B19",
-  "theme_color": "#0a1128",
+  "theme_color": "#0D1428",
   "orientation": "portrait",
   "icons": [
     {
