@@ -1,6 +1,8 @@
-// Önbellek adı ve önbelleğe alınacak temel dosyalar
-const CACHE_NAME = 'butce-app-dark-v1';
-const urlsToCache = [
+/**
+ * TAYFUN BÜTÇE - Çevrimdışı Çalışma ve Önbellek Yönetimi
+ */
+const CACHE_NAME = 'tayfun-butce-v2';
+const assetsToCache = [
     './',
     './index.html',
     './style.css',
@@ -9,37 +11,32 @@ const urlsToCache = [
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 
-// Service Worker Kurulumu (Install)
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => {
-                console.log('Dosyalar önbelleğe alınıyor.');
-                return cache.addAll(urlsToCache);
-            })
+// Uygulama Kurulum Aşaması (Önbelleğe Alma)
+self.addEventListener('install', e => {
+    e.waitUntil(
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.addAll(assetsToCache);
+        })
     );
 });
 
-// İnternet İsteklerini Yakalama (Fetch)
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                // Eğer istenen dosya önbellekte varsa onu döndür, yoksa internetten indir
-                return response || fetch(event.request);
-            })
+// Veri İsteklerini Yakalama Politikası (Önce Önbellek, Yoksa Ağ Kontrolü)
+self.addEventListener('fetch', e => {
+    e.respondWith(
+        caches.match(e.request).then(cachedResponse => {
+            return cachedResponse || fetch(e.request);
+        })
     );
 });
 
-// Eski Önbellekleri Temizleme (Activate)
-self.addEventListener('activate', event => {
-    const cacheWhitelist = [CACHE_NAME];
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
+// Eski Önbellek Sürümlerini Temizleme Filtresi
+self.addEventListener('activate', e => {
+    e.waitUntil(
+        caches.keys().then(keys => {
             return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheWhitelist.indexOf(cacheName) === -1) {
-                        return caches.delete(cacheName);
+                keys.map(key => {
+                    if (key !== CACHE_NAME) {
+                        return caches.delete(key);
                     }
                 })
             );
