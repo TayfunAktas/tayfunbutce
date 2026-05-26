@@ -1,0 +1,18 @@
+{
+  "name": "Aylık Durum - Gelir Gider",
+  "short_name": "Bütçem",
+  "description": "Kişisel mali durum ve gelir gider takip uygulaması.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#070B19",
+  "theme_color": "#0a1128",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/5501/5501375.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gelir Gider Takibi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a1128">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header class="top-header">
+            <div class="user-info">
+                <div class="avatar">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tayfun" alt="Profil">
+                </div>
+                <div>
+                    <p class="greeting-text">Merhaba,</p>
+                    <h2 class="user-name">Tayfun</h2>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            </div>
+        </header>
+
+        <section class="card aylik-durum-card">
+            <div class="card-header">
+                <h3>Aylık Durum</h3>
+                <button class="icon-btn small"><i class="fa-solid fa-ellipsis"></i></button>
+            </div>
+            
+            <div class="balance-display">
+                <h1 id="net-balance">0,00 TL</h1>
+            </div>
+
+            <div class="date-filters">
+                <select id="month-select" class="dark-select">
+                    <option value="1">Ocak</option>
+                    <option value="2">Şubat</option>
+                    <option value="3">Mart</option>
+                    <option value="4">Nisan</option>
+                    <option value="5">Mayıs</option>
+                    <option value="6">Haziran</option>
+                    <option value="7">Temmuz</option>
+                    <option value="8">Ağustos</option>
+                    <option value="9">Eylül</option>
+                    <option value="10">Ekim</option>
+                    <option value="11">Kasım</option>
+                    <option value="12">Aralık</option>
+                </select>
+                <select id="year-select" class="dark-select">
+                    </select>
+            </div>
+
+            <div class="summary-row">
+                <div class="summary-box">
+                    <i class="fa-solid fa-arrow-down text-green"></i>
+                    <div>
+                        <p>Gelir</p>
+                        <h4 id="total-income">0,00 TL</h4>
+                    </div>
+                </div>
+                <div class="summary-box">
+                    <i class="fa-solid fa-arrow-up text-red"></i>
+                    <div>
+                        <p>Gider</p>
+                        <h4 id="total-expense">0,00 TL</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="transactions-section">
+            <div class="section-header">
+                <h3>Son İşlemler</h3>
+                <a href="#" class="view-all">Tümü</a>
+            </div>
+            <ul id="transaction-list" class="transaction-list">
+                </ul>
+        </section>
+
+        <div id="add-modal" class="modal-overlay">
+            <div class="modal-content card">
+                <div class="modal-header">
+                    <h3>Yeni İşlem</h3>
+                    <button class="close-btn" id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <form id="transaction-form">
+                    <div class="form-group type-toggle">
+                        <input type="radio" id="type-income" name="type" value="income" checked>
+                        <label for="type-income" class="toggle-btn income-btn">Gelir</label>
+                        
+                        <input type="radio" id="type-expense" name="type" value="expense">
+                        <label for="type-expense" class="toggle-btn expense-btn">Gider</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <input type="text" id="desc" class="dark-input" placeholder="Örn: Maaş, Market, Fatura" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tutar</label>
+                        <input type="number" id="amount" class="dark-input" step="0.01" placeholder="0.00" required>
+                    </div>
+                    <button type="submit" class="action-btn primary-btn">İşlemi Kaydet</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i></a>
+        <a href="#" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i></a>
+        <div class="nav-item fab-container">
+            <button id="open-modal-btn" class="fab-btn"><i class="fa-solid fa-qrcode"></i></button>
+        </div>
+        <a href="#" class="nav-item"><i class="fa-regular fa-credit-card"></i></a>
+        <a href="#" class="nav-item"><i class="fa-regular fa-user"></i></a>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
