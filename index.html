@@ -3,125 +3,408 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gelir Gider Takibi</title>
+    <title>Tayfun Bütçe</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0a1128">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-
-    <div class="app-container">
-        
-        <header class="top-header">
-            <div class="user-info">
-                <div class="avatar">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tayfun" alt="Profil">
-                </div>
-                <div>
-                    <p class="greeting-text">Merhaba,</p>
-                    <h2 class="user-name">Tayfun</h2>
-                </div>
-            </div>
-            <div class="header-actions">
-                <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
-            </div>
-        </header>
-
-        <section class="card aylik-durum-card">
-            <div class="card-header">
-                <h3>Aylık Durum</h3>
-                <button class="icon-btn small"><i class="fa-solid fa-ellipsis"></i></button>
-            </div>
-            
-            <div class="balance-display">
-                <h1 id="net-balance">0,00 TL</h1>
-            </div>
-
-            <div class="date-filters">
-                <select id="month-select" class="dark-select">
-                    <option value="1">Ocak</option>
-                    <option value="2">Şubat</option>
-                    <option value="3">Mart</option>
-                    <option value="4">Nisan</option>
-                    <option value="5">Mayıs</option>
-                    <option value="6">Haziran</option>
-                    <option value="7">Temmuz</option>
-                    <option value="8">Ağustos</option>
-                    <option value="9">Eylül</option>
-                    <option value="10">Ekim</option>
-                    <option value="11">Kasım</option>
-                    <option value="12">Aralık</option>
-                </select>
-                <select id="year-select" class="dark-select">
-                    </select>
-            </div>
-
-            <div class="summary-row">
-                <div class="summary-box">
-                    <i class="fa-solid fa-arrow-down text-green"></i>
-                    <div>
-                        <p>Gelir</p>
-                        <h4 id="total-income">0,00 TL</h4>
-                    </div>
-                </div>
-                <div class="summary-box">
-                    <i class="fa-solid fa-arrow-up text-red"></i>
-                    <div>
-                        <p>Gider</p>
-                        <h4 id="total-expense">0,00 TL</h4>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="transactions-section">
-            <div class="section-header">
-                <h3>Son İşlemler</h3>
-                <a href="#" class="view-all">Tümü</a>
-            </div>
-            <ul id="transaction-list" class="transaction-list">
-                </ul>
-        </section>
-
-        <div id="add-modal" class="modal-overlay">
-            <div class="modal-content card">
-                <div class="modal-header">
-                    <h3>Yeni İşlem</h3>
-                    <button class="close-btn" id="close-modal"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <form id="transaction-form">
-                    <div class="form-group type-toggle">
-                        <input type="radio" id="type-income" name="type" value="income" checked>
-                        <label for="type-income" class="toggle-btn income-btn">Gelir</label>
-                        
-                        <input type="radio" id="type-expense" name="type" value="expense">
-                        <label for="type-expense" class="toggle-btn expense-btn">Gider</label>
-                    </div>
-                    <div class="form-group">
-                        <label>Açıklama</label>
-                        <input type="text" id="desc" class="dark-input" placeholder="Örn: Maaş, Market, Fatura" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Tutar</label>
-                        <input type="number" id="amount" class="dark-input" step="0.01" placeholder="0.00" required>
-                    </div>
-                    <button type="submit" class="action-btn primary-btn">İşlemi Kaydet</button>
-                </form>
-            </div>
+<body class="dark-mode theme-blue"> <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <div id="sidebar" class="sidebar-menu">
+        <div class="sidebar-header">
+            <h2 class="app-brand-title">Tayfun Bütçe</h2>
+            <button id="close-sidebar" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
         </div>
-
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" data-target="dashboard"><i class="fa-solid fa-chart-pie"></i> Ana Sayfa</a>
+            <a href="#" class="sidebar-link" data-target="transactions"><i class="fa-solid fa-money-bill-transfer"></i> İşlemler</a>
+            <a href="#" class="sidebar-link" data-target="kasa"><i class="fa-solid fa-vault"></i> Kasa Sayfası</a>
+            <a href="#" class="sidebar-link" data-target="installments"><i class="fa-solid fa-credit-card"></i> Taksitlendirme</a>
+            <a href="#" class="sidebar-link" data-target="fixed-expenses"><i class="fa-solid fa-calendar-check"></i> Sabit Giderler</a>
+            <a href="#" class="sidebar-link" data-target="settings"><i class="fa-solid fa-gear"></i> Ayarlar</a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="signature-text">Tayfun AKTAŞ</div>
+            <div class="copyright-text">Tüm hakları saklıdır.</div>
+        </div>
     </div>
 
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i></a>
-        <div class="nav-item fab-container">
-            <button id="open-modal-btn" class="fab-btn"><i class="fa-solid fa-qrcode"></i></button>
+    <header class="main-header">
+        <div class="header-left">
+            <button id="open-sidebar" class="burger-btn"><i class="fa-solid fa-bars"></i></button>
+            <div class="welcome-ctx">
+                <span class="welcome-msg">Hoşgeldiniz,</span>
+                <span class="welcome-user">Tayfun</span>
+            </div>
         </div>
-        <a href="#" class="nav-item"><i class="fa-regular fa-credit-card"></i></a>
-        <a href="#" class="nav-item"><i class="fa-regular fa-user"></i></a>
+        <div class="header-right">
+            <select id="global-month-select" class="header-select">
+                <option value="1">Ocak</option><option value="2">Şubat</option><option value="3">Mart</option>
+                <option value="4">Nisan</option><option value="5">Mayıs</option><option value="6">Haziran</option>
+                <option value="7">Temmuz</option><option value="8">Ağustos</option><option value="9">Eylül</option>
+                <option value="10">Ekim</option><option value="11">Kasım</option><option value="12">Aralık</option>
+            </select>
+            <select id="global-year-select" class="header-select">
+                </select>
+        </div>
+    </header>
+
+    <main class="content-wrapper">
+
+        <section id="page-dashboard" class="app-page active">
+            <div class="card balance-card">
+                <p class="card-label">Kasa Bakiyesi</p>
+                <h1 id="dash-net-balance">0,00 TL</h1>
+                <div id="dash-balance-change" class="balance-change-badge text-green">
+                    <i class="fa-solid fa-arrow-trend-up"></i> 0,00 TL (%0)
+                </div>
+            </div>
+
+            <div class="card goal-card">
+                <h3>Yıl Sonu Kasa Hedefi</h3>
+                <div class="goal-progress-container">
+                    <div class="goal-bar-bg">
+                        <div id="goal-bar-fill" class="goal-bar-fill"></div>
+                    </div>
+                    <div class="goal-metrics">
+                        <span>İlerleme: <strong id="goal-percent">%0</strong></span>
+                        <span>Kalan: <strong id="goal-remaining">0,00 TL</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-grid">
+                <div class="card summary-box income">
+                    <i class="fa-solid fa-wallet"></i>
+                    <div><p>Toplam Gelir</p><h3 id="dash-total-income">0,00 TL</h3></div>
+                </div>
+                <div class="card summary-box expense">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    <div><p>Toplam Gider</p><h3 id="dash-total-expense">0,00 TL</h3></div>
+                </div>
+                <div class="card summary-box investment">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <div>
+                        <p>Yatırım Alanı</p><h3 id="dash-total-invest">0,00 TL</h3>
+                        <span id="dash-invest-ratio" class="ratio-indicator">%0 Yönlendi</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card analytics-card">
+                <h3>Seçili Yıl Dönemi Analizleri (YTD Ortalamalar)</h3>
+                <div class="analytics-row">
+                    <div class="analytics-item"><span>Gelir Ortalaması:</span><strong id="avg-income">0,00 TL</strong></div>
+                    <div class="analytics-item"><span>Gider Ortalaması:</span><strong id="avg-expense">0,00 TL</strong></div>
+                    <div class="analytics-item"><span>Yatırım Ortalaması:</span><strong id="avg-invest">0,00 TL</strong></div>
+                    <div class="analytics-item"><span>Yatırım / Gelir Oranı:</span><strong id="avg-invest-ratio">%0</strong></div>
+                </div>
+                <div class="peaks-container">
+                    <div class="peak-item"><i class="fa-solid fa-circle-chevron-up text-green"></i> En Fazla Gelir: <span id="peak-income-item">-</span></div>
+                    <div class="peak-item"><i class="fa-solid fa-circle-chevron-down text-red"></i> En Fazla Gider: <span id="peak-expense-item">-</span></div>
+                </div>
+                <div class="mom-trends">
+                    <div class="trend-line">Geçen Aya Göre Gelir: <span id="trend-income">-</span></div>
+                    <div class="trend-line">Geçen Aya Göre Gider: <span id="trend-expense">-</span></div>
+                    <div class="trend-line">Geçen Aya Göre Yatırım: <span id="trend-invest">-</span></div>
+                </div>
+            </div>
+
+            <div class="card cumulative-card">
+                <h3>Yıl Başından İtibaren Toplam Durum</h3>
+                <div class="cumulative-grid">
+                    <div><p>Toplam Birikmiş Gelir</p><h4 id="cum-income">0,00 TL</h4></div>
+                    <div><p>Toplam Birikmiş Gider</p><h4 id="cum-expense">0,00 TL</h4></div>
+                    <div><p>Toplam Birikmiş Yatırım</p><h4 id="cum-invest">0,00 TL</h4></div>
+                    <div><p>Toplam Yatırım Oranı</p><h4 id="cum-invest-ratio">%0</h4></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="page-transactions" class="app-page">
+            <div class="card tx-status-card">
+                <h3>Bu Ayın Net Durumu</h3>
+                <h2 id="tx-month-net-amount">0,00 TL</h2>
+                <p class="sub-label">(Gelirler - Giderler - Yatırımlar)</p>
+            </div>
+
+            <div class="tx-tabs">
+                <button class="tx-tab-btn active" data-tab="income">Gelirler</button>
+                <button class="tx-tab-btn" data-tab="expense">Giderler</button>
+                <button class="tx-tab-btn" data-tab="invest">Yatırımlar</button>
+            </div>
+
+            <div class="add-action-area">
+                <button id="btn-open-tx-modal" class="action-btn-primary"><i class="fa-solid fa-plus"></i> İşlem Ekle</button>
+            </div>
+
+            <div id="tx-lists-container">
+                </div>
+        </section>
+
+        <section id="page-kasa" class="app-page">
+            <div class="card cash-vault-card">
+                <h3>Toplam Birikmiş Nakit Değeri</h3>
+                <h1 id="kasa-total-cash">0,00 TL</h1>
+            </div>
+
+            <div class="kasa-actions-grid">
+                <button class="kasa-btn income-bg" data-action="giris"><i class="fa-solid fa-money-bill-trend-up"></i> Kasaya Giriş</button>
+                <button class="kasa-btn expense-bg" data-action="cikis"><i class="fa-solid fa-money-bill-transfer"></i> Kasadan Çıkış</button>
+            </div>
+
+            <div class="card kasa-logs-card">
+                <h3>Seçili Ay İçi Kasa Hareketleri Log Kayıtları</h3>
+                <ul id="kasa-logs-list" class="kasa-logs-list">
+                    </ul>
+            </div>
+        </section>
+
+        <section id="page-installments" class="app-page">
+            <div class="add-action-area">
+                <button id="btn-open-ins-modal" class="action-btn-primary"><i class="fa-solid fa-credit-card"></i> Taksitli İşlem Ekle</button>
+            </div>
+            
+            <div class="card active-installments-card">
+                <h3>Seçili Ayın Ödenecek Aktif Taksit Planlamaları</h3>
+                <div id="installment-month-list">
+                    </div>
+            </div>
+        </section>
+
+        <section id="page-fixed-expenses" class="app-page">
+            <div class="add-action-area">
+                <button id="btn-open-fixed-modal" class="action-btn-primary"><i class="fa-solid fa-layer-group"></i> Sabit Kalem Kaydet</button>
+            </div>
+
+            <div class="card fixed-list-card">
+                <h3>Kayıtlı Sözleşmeli Sabit Gider ve Yatırım Kalemleri</h3>
+                <div id="fixed-contracts-list">
+                    </div>
+            </div>
+        </section>
+
+        <section id="page-settings" class="app-page">
+            <div class="card settings-input-card">
+                <h3>Yıl Sonu Kasa Hedef Tutarı</h3>
+                <div class="input-inline">
+                    <input type="number" id="settings-goal-input" class="dark-input" step="0.01" placeholder="1000000.00">
+                    <button id="btn-save-goal" class="action-btn-primary small">Kaydet</button>
+                </div>
+            </div>
+
+            <div class="card settings-input-card">
+                <h3>Kategori Yönetim Merkezi</h3>
+                <div class="form-group">
+                    <label>Modül Türü</label>
+                    <select id="settings-cat-type" class="dark-input">
+                        <option value="income">Gelir Kalemleri</option>
+                        <option value="expense">Gider Kalemleri</option>
+                        <option value="invest">Yatırım Kalemleri</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Kategori Adı</label>
+                    <div class="input-inline">
+                        <input type="text" id="settings-cat-name" class="dark-input" placeholder="Örn: Prim, Kira, Fon">
+                        <button id="btn-add-category" class="action-btn-primary small">Ekle</button>
+                    </div>
+                </div>
+                <div class="category-manager-list">
+                    <h4>Kayıtlı Kategoriler</h4>
+                    <ul id="settings-categories-render-list" class="managed-list"></ul>
+                </div>
+            </div>
+
+            <div class="card theme-picker-card">
+                <h3>Görsel Tema ve Renk Paleti</h3>
+                <div class="theme-colors-row">
+                    <button class="color-dot blue" data-color="blue"></button>
+                    <button class="color-dot green" data-color="green"></button>
+                    <button class="color-dot yellow" data-color="yellow"></button>
+                    <button class="color-dot red" data-color="red"></button>
+                </div>
+                <div class="toggle-mode-area">
+                    <button id="btn-toggle-display-mode" class="action-btn-primary"><i class="fa-solid fa-circle-half-stroke"></i> Açık / Koyu Tema Değiştir</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <nav class="floating-navbar">
+        <a href="#" class="nav-link active" data-target="dashboard"><i class="fa-solid fa-chart-pie"></i><span>Ana Sayfa</span></a>
+        <a href="#" class="nav-link" data-target="transactions"><i class="fa-solid fa-money-bill-transfer"></i><span>İşlemler</span></a>
+        <a href="#" class="nav-link" data-target="kasa"><i class="fa-solid fa-vault"></i><span>Kasa</span></a>
+        <a href="#" class="nav-link" data-target="installments"><i class="fa-solid fa-credit-card"></i><span>Taksit</span></a>
+        <a href="#" class="nav-link" data-target="fixed-expenses"><i class="fa-solid fa-calendar-check"></i><span>Sabit</span></a>
+        <a href="#" class="nav-link" data-target="settings"><i class="fa-solid fa-gear"></i><span>Ayarlar</span></a>
     </nav>
+
+    <div id="modal-transaction" class="modal-backdrop">
+        <div class="modal-box card">
+            <div class="modal-box-header">
+                <h3 id="tx-modal-title">İşlem Girişi</h3>
+                <button class="close-modal-btn" data-close="modal-transaction"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-transaction">
+                <input type="hidden" id="tx-edit-id">
+                <div class="form-group">
+                    <label>Kategori Kalemi</label>
+                    <select id="tx-category-select" class="dark-input" required></select>
+                </div>
+                <div class="form-group">
+                    <label>İşlem Tarihi</label>
+                    <input type="date" id="tx-date" class="dark-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    <input type="text" id="tx-desc" class="dark-input" placeholder="Detay bilgisi giriniz" required>
+                </div>
+                <div class="form-group">
+                    <label>Tutar</label>
+                    <input type="number" id="tx-amount" class="dark-input" step="0.01" placeholder="0.00" required>
+                </div>
+                <button type="submit" class="action-btn-primary full-width">İşlemi Tamamla</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-kasa-action" class="modal-backdrop">
+        <div class="modal-box card">
+            <div class="modal-box-header">
+                <h3 id="kasa-modal-title">Kasa İşlemi</h3>
+                <button class="close-modal-btn" data-close="modal-kasa-action"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-kasa-action">
+                <input type="hidden" id="kasa-action-type">
+                <div class="form-group">
+                    <label>Tarih</label>
+                    <input type="date" id="kasa-action-date" class="dark-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Tutar (TL)</label>
+                    <input type="number" id="kasa-action-amount" class="dark-input" step="0.01" required>
+                </div>
+                <button type="submit" class="action-btn-primary full-width">Kasayı Güncelle</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-installment" class="modal-backdrop">
+        <div class="modal-box card">
+            <div class="modal-box-header">
+                <h3>Taksitli Borç / Kredi Planlama Girişi</h3>
+                <button class="close-modal-btn" data-close="modal-installment"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-installment">
+                <div class="form-group">
+                    <label>Taksitlendirme Türü</label>
+                    <select id="ins-type" class="dark-input">
+                        <option value="cc">Kredi Kartı Taksitli İşlem</option>
+                        <option value="loan">Kredi / Taksitli Nakit Avans</option>
+                    </select>
+                </div>
+                <div class="form-group" id="group-ins-statement-day">
+                    <label>Kredi Kartı Hesap Kesim Günü (Ayın Kaçı?)</label>
+                    <input type="number" id="ins-statement-day" class="dark-input" min="1" max="31" value="15">
+                </div>
+                <div class="form-group" id="group-ins-first-date" style="display:none;">
+                    <label>İlk Taksit Ödeme Tarihi</label>
+                    <input type="date" id="ins-first-date" class="dark-input">
+                </div>
+                <div class="form-group">
+                    <label>Toplam İşlem Tutarı</label>
+                    <input type="number" id="ins-total-amount" class="dark-input" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Taksit Sayısı (Ay Vadesi)</label>
+                    <input type="number" id="ins-count" class="dark-input" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>İşlem / Kayıt Tarihi</label>
+                    <input type="date" id="ins-date" class="dark-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Açıklama Başlığı (Kart / Kredi Adı)</label>
+                    <input type="text" id="ins-desc" class="dark-input" placeholder="Örn: A Kart, İhtiyaç Kredisi" required>
+                </div>
+                <button type="submit" class="action-btn-primary full-width">Planlamayı Oluştur</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-fixed" class="modal-backdrop">
+        <div class="modal-box card">
+            <div class="modal-box-header">
+                <h3>Sabit Sözleşmeli Kalem Kayıt Penceresi</h3>
+                <button class="close-modal-btn" data-close="modal-fixed"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-fixed">
+                <input type="hidden" id="fixed-edit-id">
+                <div class="form-group">
+                    <label>Modül Sınıfı</label>
+                    <select id="fixed-type" class="dark-input">
+                        <option value="expense">Sabit Gider Sözleşmesi</option>
+                        <option value="invest">Sabit Yatırım Planı (BES vb.)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Kalem Tanımı Başlığı</label>
+                    <input type="text" id="fixed-name" class="dark-input" placeholder="Örn: Ev Kirası, BES Planı" required>
+                </div>
+                <div class="form-group">
+                    <label>Aylık Sabit Tutar</label>
+                    <input type="number" id="fixed-amount" class="dark-input" step="0.01" required>
+                </div>
+                <div class="form-group inline-row">
+                    <div>
+                        <label>Başlangıç Ayı</label>
+                        <input type="number" id="fixed-start-month" class="dark-input" min="1" max="12" required>
+                    </div>
+                    <div>
+                        <label>Başlangıç Yılı</label>
+                        <input type="number" id="fixed-start-year" class="dark-input" min="2026" max="2050" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Taahhüt Süresi (Kaç Ay Ödenecek?)</label>
+                    <input type="number" id="fixed-duration" class="dark-input" min="1" required>
+                </div>
+                
+                <div id="fixed-edit-modification-zone" class="form-checkbox-group" style="display:none;">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="fixed-checkbox-modify">
+                        <span class="checkmark"></span>
+                        Tutarda Geleceğe Yönelik Değişiklik Yap
+                    </label>
+                    <div id="fixed-modification-subform" class="modification-subform" style="display:none;">
+                        <div class="form-group">
+                            <label>Yeni Tutar</label>
+                            <input type="number" id="fixed-new-amount" class="dark-input" step="0.01">
+                        </div>
+                        <div class="form-group inline-row">
+                            <div>
+                                <label>Geçerlilik Başlangıç Ayı</label>
+                                <input type="number" id="fixed-mod-month" class="dark-input" min="1" max="12">
+                            </div>
+                            <div>
+                                <label>Geçerlilik Başlangıç Yılı</label>
+                                <input type="number" id="fixed-mod-year" class="dark-input" min="2026" max="2050">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Yeni Süreç Geçerlilik Uzunluğu (Ay)</label>
+                            <input type="number" id="fixed-mod-duration" class="dark-input" min="1">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="action-btn-primary full-width">Sözleşmeyi Kaydet</button>
+            </form>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
